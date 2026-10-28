@@ -29,3 +29,21 @@ def test_ndvi_on_real_scene(cat, tmp_path):
     with rasterio.open(res.outputs["geotiff"]) as src:
         assert src.res == (10.0, 10.0)
         assert 200 < src.width < 300  # ~2.5 km at 10 m
+
+
+def test_time_series_spring_greening():
+    from stac_eo_mcp.analysis import time_series
+
+    res = time_series(
+        Settings(max_scenes=8),
+        CatalogName.EARTH_SEARCH,
+        SpectralIndex.NDVI,
+        PARKS,
+        DateRange.parse("2025-01-01/2025-06-30"),
+        max_cloud_cover=30,
+    )
+    assert len(res.points) >= 3
+    dates = [p.date for p in res.points]
+    assert dates == sorted(dates)
+    assert len(set(dates)) == len(dates)  # one point per day despite tile overlap
+    assert all(-1 <= p.mean <= 1 for p in res.points)

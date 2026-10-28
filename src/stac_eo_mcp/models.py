@@ -102,7 +102,7 @@ class BBox(BaseModel):
             raise AreaTooLargeError(
                 f"The bbox covers {area:,.0f} km², above the {max_km2:,.0f} km² limit.",
                 hint=(
-                    "Use a smaller bbox (about 0.09° x 0.09° is ~100 km² at mid latitudes) "
+                    "Use a smaller bbox (0.1° x 0.1° is ~90 km² at 45° latitude) "
                     "or raise STAC_EO_MCP_MAX_AREA_KM2."
                 ),
             )
@@ -282,19 +282,31 @@ class IndexResult(BaseModel):
 class TimeSeriesPoint(BaseModel):
     date: str
     item_id: str
-    mean: float | None
+    mean: float
+    std: float | None = None
     valid_pixel_pct: float
 
 
 class SkippedScene(BaseModel):
+    date: str
     item_id: str
     reason: str
+
+
+class TimeSeriesSummary(BaseModel):
+    mean_of_means: float
+    min: TimeSeriesPoint
+    max: TimeSeriesPoint
+    change: float = Field(description="Last point mean minus first point mean")
 
 
 class TimeSeriesResult(BaseModel):
     index: SpectralIndex
     bbox: list[float]
     date_range: str
-    scenes_found: int
-    points: list[TimeSeriesPoint]
+    scenes_found: int = Field(description="Scenes matching the search, before de-duplication")
+    dates_analysed: int
+    points: list[TimeSeriesPoint] = Field(description="One point per date, oldest first")
     skipped: list[SkippedScene] = []
+    summary: TimeSeriesSummary | None = None
+    note: str | None = None
