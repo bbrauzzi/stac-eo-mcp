@@ -40,7 +40,6 @@ stac-eo-mcp = "stac_eo_mcp.server:main"
 [dependency-groups]
 dev = [
     "pytest>=9.0",
-    "pytest-asyncio>=1.0",
     "ruff>=0.17",
 ]
 
@@ -63,13 +62,12 @@ select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "N", "PT"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "function"
 addopts = "-ra --strict-markers -m 'not slow'"
 filterwarnings = [
     # Third-party deprecation inside planetary-computer, not our code.
     "ignore:Could not parse bucket/account from href:UserWarning",
     "ignore:Use `@` matmul instead of `\\*` mul operator:PendingDeprecationWarning",
+    "ignore:The 'shapely.ops.transform\\(\\)' function is deprecated:DeprecationWarning",
     "ignore:Support for class-based `config` is deprecated:DeprecationWarning:planetary_computer",
 ]
 markers = [

@@ -39,6 +39,11 @@ def make_item(
 
 
 @pytest.fixture
+def anyio_backend() -> str:
+    return "asyncio"
+
+
+@pytest.fixture
 def pc_item() -> pystac.Item:
     return make_item(
         assets={
