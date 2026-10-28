@@ -19,7 +19,12 @@ the pixels inside your area, masks clouds and answers with numbers, a map and a 
 <p align="center"><sub>Produced by <code>compute_index</code> and <code>time_series</code> on real data.
 White pixels are clouds and shadows masked with the Sentinel-2 SCL layer.</sub></p>
 
-<!-- TODO: add a short GIF of a Claude Desktop conversation here (docs/demo.gif). -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bbrauzzi/stac-eo-mcp/main/docs/demo.gif" width="100%"
+       alt="Demo: install with claude mcp add, ask Claude Code about Villa Borghese, get NDVI numbers and a map">
+</p>
+<p align="center"><sub>Install in Claude Code, ask a question, get numbers and a map
+(a real session, replayed faster).</sub></p>
 
 ## Features
 
