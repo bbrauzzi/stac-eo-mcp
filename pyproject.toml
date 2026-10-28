@@ -69,6 +69,7 @@ addopts = "-ra --strict-markers -m 'not slow'"
 filterwarnings = [
     # Third-party deprecation inside planetary-computer, not our code.
     "ignore:Could not parse bucket/account from href:UserWarning",
+    "ignore:Use `@` matmul instead of `\\*` mul operator:PendingDeprecationWarning",
     "ignore:Support for class-based `config` is deprecated:DeprecationWarning:planetary_computer",
 ]
 markers = [

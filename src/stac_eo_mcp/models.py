@@ -199,6 +199,23 @@ def check_limit(value: int, maximum: int) -> int:
     return value
 
 
+class SaveFormat(StrEnum):
+    NONE = "none"
+    PNG = "png"
+    GEOTIFF = "geotiff"
+    BOTH = "both"
+
+
+def parse_save(value: str | None) -> SaveFormat:
+    try:
+        return SaveFormat((value or "none").strip().lower())
+    except ValueError:
+        options = ", ".join(f.value for f in SaveFormat)
+        raise InvalidInputError(
+            f"Unknown save format '{value}'.", hint=f"Use one of: {options}."
+        ) from None
+
+
 # --- Outputs (compact, LLM friendly) --------------------------------------
 
 
@@ -257,7 +274,9 @@ class IndexResult(BaseModel):
     datetime: str | None
     bbox: list[float]
     stats: IndexStats
+    resolution_m: float = 10.0
     outputs: dict[str, str] = Field(default_factory=dict, description="format -> file path")
+    note: str | None = None
 
 
 class TimeSeriesPoint(BaseModel):
