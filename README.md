@@ -4,6 +4,10 @@
 [![PyPI](https://img.shields.io/pypi/v/stac-eo-mcp)](https://pypi.org/project/stac-eo-mcp/)
 [![Python](https://img.shields.io/pypi/pyversions/stac-eo-mcp)](https://pypi.org/project/stac-eo-mcp/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![MCP server](https://img.shields.io/badge/MCP-server-6E56CF)](https://modelcontextprotocol.io)
+[![Downloads](https://img.shields.io/pypi/dm/stac-eo-mcp)](https://pypistats.org/packages/stac-eo-mcp)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
 An [MCP](https://modelcontextprotocol.io) server that lets AI agents (Claude Desktop, Claude Code,
 Cursor) **search satellite imagery in STAC catalogs and measure vegetation, water and burn
