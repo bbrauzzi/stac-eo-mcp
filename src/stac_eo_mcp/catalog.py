@@ -115,11 +115,16 @@ def get_config(catalog: CatalogName | str) -> CatalogConfig:
 
 
 @lru_cache
-def get_client(catalog: CatalogName) -> Client:
+def get_client(catalog: CatalogName, signed: bool = True) -> Client:
+    """STAC client; `signed` signs Planetary Computer asset URLs in results.
+
+    Listing collections must use signed=False: signing every collection costs one
+    token request each, which takes ~60 s on Planetary Computer instead of <1 s.
+    """
     cfg = get_config(catalog)
-    modifier = planetary_computer.sign_inplace if cfg.sign else None
+    modifier = planetary_computer.sign_inplace if cfg.sign and signed else None
     try:
-        log.info("Opening STAC catalog %s", cfg.url)
+        log.info("Opening STAC catalog %s (signed=%s)", cfg.url, modifier is not None)
         return Client.open(cfg.url, modifier=modifier)
     except Exception as exc:
         raise CatalogError(
@@ -133,7 +138,7 @@ def get_client(catalog: CatalogName) -> Client:
 
 @lru_cache
 def _collections(catalog: CatalogName) -> tuple[CollectionSummary, ...]:
-    client = get_client(catalog)
+    client = get_client(catalog, signed=False)
     try:
         cols = list(client.get_collections())
     except APIError as exc:

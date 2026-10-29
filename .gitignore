@@ -8,3 +8,4 @@ build/
 .ruff_cache/
 .coverage
 stac-eo-mcp-output/
+.playwright-mcp/

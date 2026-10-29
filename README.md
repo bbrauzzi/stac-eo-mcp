@@ -178,7 +178,7 @@ uv sync
 uv run pytest            # fast tests (no network)
 uv run pytest -m slow    # live tests against both catalogs (~1-2 min)
 uv run ruff check . && uv run ruff format --check .
-npx @modelcontextprotocol/inspector uv run stac-eo-mcp   # try it in MCP Inspector
+npx @modelcontextprotocol/inspector -e STAC_EO_MCP_OUTPUT_DIR=/tmp/out uv run stac-eo-mcp  # MCP Inspector (pass env with -e)
 uv run python scripts/make_readme_figures.py             # regenerate the README figures
 ```
 

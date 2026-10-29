@@ -1,5 +1,7 @@
 """Live catalog tests. Run with: uv run pytest -m slow"""
 
+import time
+
 import pytest
 
 from stac_eo_mcp import catalog
@@ -15,7 +17,11 @@ SUMMER = DateRange.parse("2025-06-01/2025-07-15")
 
 @pytest.mark.parametrize("cat", list(CatalogName))
 def test_list_collections_includes_s2(cat):
+    catalog._collections.cache_clear()
+    start = time.monotonic()
     ids = {c.id for c in catalog.list_collections(cat)}
+    # Signing every collection made this take ~60 s on Planetary Computer.
+    assert time.monotonic() - start < 15
     assert catalog.get_config(cat).s2_collection in ids
 
 

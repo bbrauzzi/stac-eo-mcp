@@ -42,7 +42,7 @@ class FakeClient:
 @pytest.fixture
 def fake_client(monkeypatch, fake_collections):
     client = FakeClient([])
-    monkeypatch.setattr(catalog, "get_client", lambda _c: client)
+    monkeypatch.setattr(catalog, "get_client", lambda _c, signed=True: client)
     return client
 
 
